@@ -27,43 +27,52 @@
         let result = document.getElementById("result");
 
         function calculateAge(){
+            // Get date of birth from user...
             let birthDate = new Date(userInput.value);
 
-            let d1 = birthDate.getDate();
-            let m1 = birthDate.getMonth() + 1;
-            let y1 = birthDate.getFullYear();
+            // Get the day, month and year into different variables.
+            /* The value, 1, is added to the getMonth() method because the index value for January is 0.
+                This is so that it matches with format we are accustomed to with January as 1.
+            */
+            let userBirthDay = birthDate.getDate();
+            let userBirthMonth = birthDate.getMonth() + 1;
+            let userBirthYear = birthDate.getFullYear();
 
-                        
+            
+            // Get today's date
             let today = new Date();
+            
+            /* Get the current day, month and year
+                as at the time the user inputted his/her birthday. */
+            let actualDay = today.getDate();
+            let actualMonth = today.getMonth() + 1;
+            let actualYear = today.getFullYear();
 
-            let d2 = today.getDate();
-            let m2 = today.getMonth() + 1;
-            let y2 = today.getFullYear();
+            // Declare variables to store the final result of the user's day, month and year.
+            let ageByDays, ageByMonths, ageByYears;
 
-            let d3, m3, y3;
+            ageByYears = actualYear - userBirthYear;
 
-            y3 = y2 - y1;
-
-            if (m2 >- m1) {
-                m3 = m2 - m1;
+            if (actualMonth >= userBirthMonth) {
+                ageByMonths = actualMonth - userBirthMonth;
             }else {
-                y3--;
-                m3 = 12 + m2 - m1;
+                ageByYears--;
+                ageByMonths = 12 + actualMonth - userBirthMonth;
             }
 
-            if (d2 >= d1) {
-                d3 = d2 - d1;
+            if (actualDay >= userBirthDay) {
+                ageByDays = actualDay - userBirthDay;
             }else {
-                m3--;
-                d3 = getDaysInMonth(y1, m1) + d2 - d1;
+                ageByMonths--;
+                ageByDays = getDaysInMonth(userBirthYear, userBirthMonth) + actualDay - userBirthDay;
             }
 
-            if (m3 < 0) {
-                m3 = 11;
-                y3--;
+            if (ageByMonths < 0) {
+                ageByMonths = 11;
+                ageByYears--;
             }
 
-            result.innerHTML =  `You are <span>${y3}</span> years, <span>${m3}</span> months and <span>${d3}</span> days old.`
+            result.innerHTML =  `You are <span>${ageByYears}</span> years, <span>${ageByMonths}</span> months and <span>${ageByDays}</span> days old.`
 
 
 
@@ -72,8 +81,6 @@
         function getDaysInMonth(year, month) {
             return new Date(year, month, 0).getDate();
         }
-
-        console.log(new Date(2013, 0, 0))
 
     </script>
     </body>
